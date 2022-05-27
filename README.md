@@ -1,2 +1,2 @@
-# NPM_Management
-Repositorio para el curso de NPM
+# Webpack_course
+Repositorio para el curso de Webpack
