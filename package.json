@@ -22,9 +22,5 @@
   "bugs": {
     "url": "https://github.com/Camiloco345/Webpack_cuorse/issues"
   },
-  "homepage": "https://github.com/Camiloco345/Webpack_cuorse#readme",
-  "devDependencies": {
-    "webpack": "^5.72.1",
-    "webpack-cli": "^4.9.2"
-  }
+  "homepage": "https://github.com/Camiloco345/Webpack_cuorse#readme"
 }
