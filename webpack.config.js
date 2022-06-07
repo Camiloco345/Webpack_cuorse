@@ -2,17 +2,25 @@ const { resolve } = require('path');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const cssMinimazerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const terserWebpackPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js',
+        filename: '[name].[contenthash].js',
         assetModuleFilename: 'asssts/images/[hash][ext][query]'
     },
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js'],
+        alias: {
+            '@utils': path.resolve(__dirname, 'src/utils/'),
+            '@styles': path.resolve(__dirname, 'src/styles/'),
+            '@templates': path.resolve(__dirname, 'src/templates/'),
+            '@images': path.resolve(__dirname, 'src/assets/images/')
+        }
     },
 //sección de MODULOS
     module:{
@@ -43,9 +51,9 @@ module.exports = {
                 options: {
                     limit: 10000,
                     mimetype: "application/font-woff",
-                    name: "[name].[ext]",
+                    name: "[name].[contenthash].[ext]",
                     outputPath: "./assets/fonts/",
-                    publicPath: "./assets/fonts/",
+                    publicPath: "../assets/fonts/",
                     esModule: false,
                 }
             }
@@ -60,7 +68,9 @@ module.exports = {
             template: './public/index.html',
             filename:'./index.html'
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'assets/[name].[contenthash].css'
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 {
@@ -68,6 +78,14 @@ module.exports = {
                     to:'assets/images'
                 }
             ]
-        })
-    ]
+        })        
+    ],
+    //Seccion de OPTIMIZACIÓN
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new cssMinimazerWebpackPlugin(),
+            new terserWebpackPlugin()
+        ]
+    }
 }
