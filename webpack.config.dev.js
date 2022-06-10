@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const dotenvWebpack = require('dotenv-webpack');
+const bundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: './src/index.js',
@@ -80,7 +81,8 @@ module.exports = {
                 }
             ]
         }),
-        new dotenvWebpack()       
+        new dotenvWebpack(),
+        new bundleAnalyzerPlugin()       
     ],
     
 }
